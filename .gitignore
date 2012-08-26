@@ -1,0 +1,11 @@
+iOS/*.xcodeproj/project.xcworkspace/
+iOS/*.xcodeproj/xcuserdata/
+
+Qt/*-build-desktop*/
+Qt/Project/*.pro.user*
+
+Android/Source/bin/
+Android/Source/gen/
+Android/Source/libs/
+Android/Source/obj/
+Android/Workspace/

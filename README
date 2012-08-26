@@ -1,0 +1,38 @@
+Description
+===========
+Phone Wars build demonstrating working port for Android Intel x86 platform.
+For more information on the Phone Wars game visit http://softpoetry.com/
+
+
+External components used
+========================
+2c (Apache 2.0)
+https://github.com/orangelabsuk/2c
+Cross platform 3D application framework used to develop this app.
+
+Android NDK r8 (Apache 2.0)
+http://developer.android.com/sdk/ndk/
+Android NDK samples used for guidance to set u Android port.
+Source file CCGLViewJNI.java found in Dev/Android/Source/src/com/android2c/ based off hello-gl2 sample.
+
+libzip (libzip)
+http://nih.at/libzip/
+Used for Android port to open up packaged resources.
+Found in Dev/Android/Source/jni/libzip
+
+ObjLoader
+http://nccastaff.bournemouth.ac.uk/jmacey/RobTheBloke/www/
+Loads the obj model format.
+Found in Dev/External/ObjLoader
+*Modified - stripped down tutorial 3 and provided hooks into engine's cross platform file loader.
+
+UIDevice-Hardware (BSD)
+https://github.com/erica/uidevice-extension
+Describes iOS hardware types.
+Found in Dev/External/UIDevice-Hardware
+
+
+Licence
+=======
+This software is distributed under the Apache 2.0 license.
+http://www.apache.org/licenses/LICENSE-2.0.html
