@@ -19,7 +19,6 @@ LOCAL_C_INCLUDES := \
 				$(LOCAL_PATH)/../../../../Engine/Source/Rendering \
 				$(LOCAL_PATH)/../../../../Engine/Source/Scenes \
 				$(LOCAL_PATH)/../../../../Engine/Source/Tools \
-				$(LOCAL_PATH)/../../../../Engine/Source/UI \
 \
 				$(LOCAL_PATH)/../../../../External/3dsloader \
 				$(LOCAL_PATH)/../../../../External/jansson-2.3.1/src \
@@ -28,6 +27,7 @@ LOCAL_C_INCLUDES := \
 				$(LOCAL_PATH)/../../../../App/Source/ \
 				$(LOCAL_PATH)/../../../../App/Source/Game/ \
 				$(LOCAL_PATH)/../../../../App/Source/Scenes/ \
+				$(LOCAL_PATH)/../../../../App/Source/UI/ \
 
 # Use the wildcard operator so we only need to update the
 # makefile if a new folder is added/one is removed or renamed
