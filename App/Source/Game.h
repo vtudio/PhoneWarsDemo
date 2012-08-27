@@ -27,9 +27,7 @@ enum DeviceType
 #include "CharacterUpdaterPlayer.h"
 #include "CharacterUpdaterAI.h"
 
-#include "SceneGameManager.h"
 #include "SceneGameSyndicate.h"
-#include "SceneGameBurgersDeathmatch.h"
 
 #include "SceneSplashScreen.h"
 #include "SceneBackground.h"

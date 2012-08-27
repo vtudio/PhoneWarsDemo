@@ -28,7 +28,7 @@ public:
     
 protected:
     void loadGame(const char *gameID);
-    void loadedGame(SceneGameBurgersDeathmatch *game);
+    void loadedGame(SceneGameSyndicate *game);
     void startGame();
     
 public:

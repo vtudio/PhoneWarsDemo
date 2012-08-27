@@ -55,7 +55,7 @@ void SceneGameSyndicate::setup()
     // Set it up to take up the entire screen
     camera->setupViewport( 0.0f, 0.0f, 1.0f, 1.0f, frameBufferID );
     
-    camera->targetOffset.z = 75.0f;
+    camera->targetOffset.z = 120.0f;
     camera->setRotationX( -30.0f );
     
     // Initialize our path finder
@@ -73,20 +73,6 @@ void SceneGameSyndicate::setup()
     
     sceneGameUI = new SceneGameUI( this );
     gEngine->addScene( sceneGameUI );
-    
-//    {
-//        gameManager.addWave();
-//        LAMBDA_1( EmitterCallback, SceneGameSyndicate, scene,
-//                 {
-//                     {
-//                         PickupBase *pickup = scene->spawnPickUp( "gun", "weapon" );
-//                         pickup->translate( 0.0f, 0.0f, scene->mapBounds.height * 0.1f );
-//                         scene->adjustCollisionPlacement( pickup );
-//                     }
-//                 });
-//        
-//        gameManager.addEmitter( "pickups", 1.0f, 100, new EmitterCallback( this ) );
-//    }
 }
 
 
@@ -98,12 +84,16 @@ void SceneGameSyndicate::deleteLater()
 
 // CCSceneBase
 bool SceneGameSyndicate::updateScene(const CCTime &time)
-{
-    if( enemies.length == 0 )
+{    
+    // Always fade out our destination indicator
+    if( playerDestinationIndicator != NULL )
     {
-        if( gameManager.isUpdating() == false )
+        float alpha = playerDestinationIndicator->model->getColour()->alpha;
+        if( alpha > 0.0f )
         {
-            gameManager.nextWave();
+            playerDestinationIndicator->rotateY( time.delta * 720.0f );
+            CCToTarget( alpha, 0.0f, time.delta * 0.5f );
+            playerDestinationIndicator->model->setColourAlpha( alpha );
         }
     }
     
@@ -225,12 +215,9 @@ bool SceneGameSyndicate::handleOneTouch(const CCScreenTouches &touch1)
     
     if( oneTouchDoubleTapped )
     {
+        // Touch held down after a double tap
         if( touch1.timeHeld >= CC_DOUBLE_TAP_THRESHOLD )
         {
-            // Hold down shooting after a double tap
-            //CCVector3 plane;
-            //camera->project3DY( &plane, touch1.position.x, touch1.position.y );
-            //touchPlayerShootMoving( plane );
         }
     }
     else
@@ -258,81 +245,7 @@ bool SceneGameSyndicate::handleOneTouch(const CCScreenTouches &touch1)
 
 
 bool SceneGameSyndicate::handleTwoTouches(const CCScreenTouches &touch1, const CCScreenTouches &touch2)
-{   
-    return false;
-    CCPoint movement;
-    movement.x = -touch1.delta.x + -touch2.delta.x;
-    movement.y = touch1.delta.y + touch2.delta.y;
-    
-    bool zooming = true;// twoTouchAction == twotouch_zooming;
-//    bool rotating = twoTouchAction == twotouch_rotating;
-//    if( twoTouchAction == twotouch_unassigned )
-//    {
-//        {
-//            if( touch1.delta.x != 0.0f || touch1.delta.y != 0.0f ||
-//                touch2.delta.x != 0.0f || touch2.delta.y != 0.0f )
-//            {
-//                if( touch1.delta.x > CCControls::GetTouchMovementThreashold().x && 
-//                    touch2.delta.x > CCControls::GetTouchMovementThreashold().x )
-//                {
-//                    rotating = true;
-//                }
-//                
-//                if( touch1.delta.x < -CCControls::GetTouchMovementThreashold().x && 
-//                    touch2.delta.x < -CCControls::GetTouchMovementThreashold().x )
-//                {
-//                    rotating = true;
-//                }
-//            }
-//        }
-//        
-//        {
-//            if( touch1.delta.x != 0.0f || touch1.delta.y != 0.0f ||
-//                touch2.delta.x != 0.0f || touch2.delta.y != 0.0f )
-//            {
-//                if( touch1.delta.y > CCControls::GetTouchMovementThreashold().y && 
-//                    touch2.delta.y < -CCControls::GetTouchMovementThreashold().y )
-//                {
-//                    zooming = true;
-//                }
-//                
-//                if( touch1.delta.y < -CCControls::GetTouchMovementThreashold().y &&
-//                    touch2.delta.y > CCControls::GetTouchMovementThreashold().y )
-//                {
-//                    zooming = true;
-//                }
-//            }
-//        }
-//    }
-    
-//    if( rotating )
-//    {
-//        twoTouchAction = twotouch_rotating;
-//        return touchCameraRotating( touch1.delta.x, touch1.delta.y );
-//    }
-//    else 
-        if( zooming )
-    {
-        twoTouchAction = twotouch_zooming;
-        
-        // Find out the position of our touches
-        const CCScreenTouches *topTouch = &touch1,
-        *bottomTouch = &touch2;
-        if( touch1.position.y < touch2.position.y )
-        {
-            topTouch = &touch2;
-            bottomTouch = &touch1;
-        }
-        const CCScreenTouches *rightTouch = &touch1,
-        *leftTouch = &touch2;
-        if( touch1.position.x < touch2.position.x )
-        {
-            rightTouch = &touch2;
-            leftTouch = &touch1;
-        }
-        const float combinedDelta = topTouch->delta.y + rightTouch->delta.x + -bottomTouch->delta.y + -leftTouch->delta.x;
-        return touchCameraZooming( combinedDelta );
-    }
+{
     return false;
 }
 
@@ -343,6 +256,7 @@ void SceneGameSyndicate::touchRegistered(const CCScreenTouches &touch)
     twoTouchAction = twotouch_unassigned;
     super::touchRegistered( touch );
 }
+
 
 void SceneGameSyndicate::twoTouchRegistered(const CCScreenTouches &touch1, const CCScreenTouches &touch2)
 {
@@ -392,22 +306,6 @@ bool SceneGameSyndicate::touchMoving(const CCScreenTouches &touch, const CCPoint
     {
         touchCameraRotating( touch.delta.x, touch.delta.y );
     }
-//    else
-//    {
-//        CCVector3 distance;
-//        {
-//            CCVector3 plane;
-//            camera->project3DY( &plane, touch.position.x, touch.position.y );
-//            plane.sub( camera->getLookAt() );
-//            distance = cameraPanningFrom;
-//            distance.sub( plane );
-//            cameraPanningFrom = plane;
-//        }
-//        
-//        camera->targetLookAt.add( distance );
-//        camera->flagUpdate();
-//        return true;
-//    }
     
     return false;
 }
@@ -424,9 +322,6 @@ bool SceneGameSyndicate::touchReleased(const CCScreenTouches &touch, const CCTou
         // Shoot
         if( oneTouchDoubleTapped )
         {
-//            CCVector3 plane;
-//            camera->project3DY( &plane, touch.position.x, touch.position.y );
-//            playerCharacter->controller->shoot( plane );
         }
         
         // Panning
@@ -494,7 +389,13 @@ bool SceneGameSyndicate::touchReleased(const CCScreenTouches &touch, const CCTou
                 playerDestinationPending = new CCVector3();
                 camera->project3DY( playerDestinationPending, touch.position.x, touch.position.y );
                 CCClampFloat( playerDestinationPending->x, -mapBounds.width, mapBounds.width );
-                CCClampFloat( playerDestinationPending->y, -mapBounds.height, mapBounds.height );
+                CCClampFloat( playerDestinationPending->z, -mapBounds.height, mapBounds.height );
+                
+                if( playerDestinationIndicator != NULL )
+                {
+                    playerDestinationIndicator->setPositionXZ( playerDestinationPending->x, playerDestinationPending->z );
+                    playerDestinationIndicator->model->setColourAlpha( 1.0f );
+                }
             }
         }
     }
@@ -549,10 +450,6 @@ bool SceneGameSyndicate::touchCameraMoving(const CCScreenTouches &touch, const f
 
 bool SceneGameSyndicate::touchCameraZooming(const float amount)
 {
-    camera->targetOffset.z -= amount * 2.0f * camera->getOffset().z;
-    CCClampFloat( camera->targetOffset.z, 50.0f, 250.0f );
-    camera->flagUpdate();
-    
     return false;
 }
 
@@ -639,9 +536,7 @@ void SceneGameSyndicate::setFrameBufferID(const int frameBufferID)
 void SceneGameSyndicate::createEnvironment()
 {
     {
-        CCText levelsPath = "Resources/";
-        levelsPath += CLIENT_NAME;
-        levelsPath += "/levels/level_";
+        CCText levelsPath = "Resources/common/levels/level_";
         
         // Ground
         {
@@ -656,8 +551,8 @@ void SceneGameSyndicate::createEnvironment()
             
             CCText texPath = "Resources/";
             texPath += CLIENT_NAME;
-            levelsPath += "/uimenu/ui_background.png";
-            ground->primitive->setTexture( levelsPath.buffer, Resource_Packaged );
+            texPath += "/levels/level_background.png";
+            ground->primitive->setTexture( texPath.buffer, Resource_Packaged );
         }
         
         // Particles
@@ -667,6 +562,7 @@ void SceneGameSyndicate::createEnvironment()
             
             CCText texFile = levelsPath;
             texFile += "particles_diffuse.png";
+            
             {
                 if( CCFileManager::DoesFileExist( objFile.buffer, Resource_Packaged ) )
                 {
@@ -681,7 +577,7 @@ void SceneGameSyndicate::createEnvironment()
                     object->setTransparent();
                 }
             }
-            {   
+            {
                 if( CCFileManager::DoesFileExist( objFile.buffer, Resource_Packaged ) )
                 {
                     CCObject *object = new CCObject();
@@ -699,7 +595,7 @@ void SceneGameSyndicate::createEnvironment()
         }
     }
     
-    // Walls
+    // Create walls around edges of map
 	{
 		CollideableWall *wall;
 		
@@ -729,6 +625,63 @@ void SceneGameSyndicate::createEnvironment()
 		wall->setup( this, 0.0f, z, width, height );
 		wall->translate( 0.0f, 0.0f, wall->collisionBounds.z );
 	}
+    
+    // Create sandbags around the level
+    {
+        CCList<CCPoint> sandbagLocations;
+        sandbagLocations.add( new CCPoint( 0.0f, 0.0f ) );
+        sandbagLocations.add( new CCPoint( -50.0f, -100.0f ) );
+        sandbagLocations.add( new CCPoint( 50.0f, -100.0f ) );
+        sandbagLocations.add( new CCPoint( -50.0f, 100.0f ) );
+        sandbagLocations.add( new CCPoint( 50.0f, 100.0f ) );
+        
+        const float sandbagWidth = 30.0f;
+        for( int i=0; i<sandbagLocations.length; ++i )
+        {
+            CCText fxPath = "Resources/common/levels/";
+            CCText objFile = fxPath;
+            objFile += "sandbags.obj";
+            
+            CCText texFile = fxPath;
+            texFile += "sandbags_diffuse.png";
+            
+            CCObjectCollideable *object = new CCObjectCollideable();
+            object->setScene( this );
+            CCAddFlag( object->collideableType, collision_static );
+            
+            CCModelBase *model = new CCModelBase();
+            CCModelObj *model3d = CCModelObj::CacheModel( objFile.buffer, texFile.buffer );
+            model3d->setColour( CCColour( 1.0f ) );
+            model->addModel( model3d );
+            object->model = model;
+            
+            float modelWidth = model3d->getWidth();
+            float modelHeight = model3d->getHeight();
+            float modelDepth = model3d->getDepth();
+            
+            // Adjust model height
+            const float scaleFactor = sandbagWidth / modelWidth;
+            CCVector3FillPtr( &model->scale, scaleFactor, scaleFactor, scaleFactor );
+            model->rotateY( 90.0f );
+            
+            modelWidth *= scaleFactor;
+            modelDepth *= scaleFactor;
+            modelHeight *= scaleFactor;
+            
+            object->setCollisionBounds( modelDepth, modelHeight, modelWidth );
+            object->translate( 0.0f, object->collisionBounds.y, 0.0f );
+            object->setPositionXZ( sandbagLocations.list[i]->x, sandbagLocations.list[i]->y );
+            
+            pathFinderNetwork.addCollideable( object, ground->collisionBounds );
+            
+            object->setTransparent();
+            object->disableCulling = true;
+            object->readDepth = true;
+            object->drawOrder = 99;
+        }
+        
+        sandbagLocations.deleteObjects();
+    }
 }
 
 
@@ -767,13 +720,28 @@ void SceneGameSyndicate::adjustCollisionPlacement(CCObjectCollideable *source)
 
 CharacterPlayer* SceneGameSyndicate::spawnCharacter(const char *playerID, const char *type)
 {
-    return NULL;
+    CharacterPlayer *character =  ScenePlayManager::SpawnCharacter( type );
+    character->setupGame( this, playerID );
+    
+    // Don't spawn in a bad location
+    adjustCollisionPlacement( character );
+    
+	pathFinderNetwork.connect( character );
+    character->setupAI( new CharacterUpdaterPlayer(  &pathFinderNetwork ) );
+    
+#ifdef DEBUGON
+    CCText name = "SceneGameBurgersDeathmatch ";
+    name += type;
+    character->setDebugName( name.buffer );
+#endif
+    
+    return character;
 }
 
 
 void SceneGameSyndicate::deletingCharacter(CharacterPlayer *character)
 {
-    enemies.remove( character );
+    friends.remove( character );
 }
 
 
@@ -881,6 +849,19 @@ CharacterPlayer* SceneGameSyndicate::getFriend(CCObject *object)
 
 void SceneGameSyndicate::registerAttack(CCObject *from, CCObject *to, const float force)
 {
+    CharacterPlayer *friendCharacter = getFriend( to );
+    if( friendCharacter != NULL )
+    {
+        const float healthRatio = friendCharacter->controller->getHealthRatio();
+        sceneGameUI->setHealthAlpha( 1, healthRatio );
+        if( healthRatio <= 0.0f )
+        {
+            if( ScenePlayManager::scene != NULL )
+            {
+                ScenePlayManager::scene->matchEnd();
+            }
+        }
+    }
 }
 
 

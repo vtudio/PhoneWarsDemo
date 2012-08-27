@@ -121,8 +121,5 @@ protected:
     
     CCList<CharacterPlayer> friends;
     
-    SceneGameManager gameManager;
-    CCList<CharacterPlayer> enemies;
-    
     CCList<PickupBase> pickups;
 };

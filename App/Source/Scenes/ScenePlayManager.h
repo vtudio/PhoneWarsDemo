@@ -72,7 +72,7 @@ protected:
     void setGameState(const GameState state);
     
     virtual void loadGame(const char *gameID) = 0;
-    virtual void loadedGame(SceneGameBurgersDeathmatch *game) = 0;
+    virtual void loadedGame(SceneGameSyndicate *game) = 0;
     virtual void startGame();
     
 public:
@@ -101,7 +101,7 @@ protected:
     GameState gameState;
     
     CCText playerType;
-    SceneGameBurgersDeathmatch *game;
+    SceneGameSyndicate *game;
 };
 
 

@@ -58,7 +58,7 @@ void SceneAndroidsManager::loadGame(const char *gameID)
             {                         
                 scene->hideSplashScreen();
                 scene->sceneBackground->hide();
-                scene->loadedGame( new SceneGameBurgersDeathmatch( gameID.buffer ) );
+                scene->loadedGame( new SceneGameSyndicate( gameID.buffer ) );
             }                                                               
         }                                                                   
     private:                                                                
@@ -74,7 +74,7 @@ void SceneAndroidsManager::loadGame(const char *gameID)
 }
 
 
-void SceneAndroidsManager::loadedGame(SceneGameBurgersDeathmatch *game)
+void SceneAndroidsManager::loadedGame(SceneGameSyndicate *game)
 {
     this->game = game;
     game->setParent( this );

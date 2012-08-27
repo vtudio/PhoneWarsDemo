@@ -39,8 +39,6 @@
 		4A863F1015CB247B00003359 /* PickupBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A863EDF15CB247B00003359 /* PickupBase.cpp */; };
 		4A863F1115CB247B00003359 /* WeaponBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A863EE115CB247B00003359 /* WeaponBase.cpp */; };
 		4A863F1215CB247B00003359 /* SceneAndroidsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A863EE415CB247B00003359 /* SceneAndroidsManager.cpp */; };
-		4A863F1415CB247B00003359 /* SceneGameBurgersDeathmatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A863EE815CB247B00003359 /* SceneGameBurgersDeathmatch.cpp */; };
-		4A863F1515CB247B00003359 /* SceneGameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A863EEA15CB247B00003359 /* SceneGameManager.cpp */; };
 		4A863F1615CB247B00003359 /* SceneGameSyndicate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A863EEC15CB247B00003359 /* SceneGameSyndicate.cpp */; };
 		4A863F1715CB247B00003359 /* SceneGameUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A863EEE15CB247B00003359 /* SceneGameUI.cpp */; };
 		4A863F1915CB247B00003359 /* ScenePlayManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A863EF215CB247B00003359 /* ScenePlayManager.cpp */; };
@@ -197,10 +195,6 @@
 		4A863EE215CB247B00003359 /* WeaponBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeaponBase.h; sourceTree = "<group>"; };
 		4A863EE415CB247B00003359 /* SceneAndroidsManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = SceneAndroidsManager.cpp; sourceTree = "<group>"; };
 		4A863EE515CB247B00003359 /* SceneAndroidsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneAndroidsManager.h; sourceTree = "<group>"; };
-		4A863EE815CB247B00003359 /* SceneGameBurgersDeathmatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneGameBurgersDeathmatch.cpp; sourceTree = "<group>"; };
-		4A863EE915CB247B00003359 /* SceneGameBurgersDeathmatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGameBurgersDeathmatch.h; sourceTree = "<group>"; };
-		4A863EEA15CB247B00003359 /* SceneGameManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneGameManager.cpp; sourceTree = "<group>"; };
-		4A863EEB15CB247B00003359 /* SceneGameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGameManager.h; sourceTree = "<group>"; };
 		4A863EEC15CB247B00003359 /* SceneGameSyndicate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneGameSyndicate.cpp; sourceTree = "<group>"; };
 		4A863EED15CB247B00003359 /* SceneGameSyndicate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGameSyndicate.h; sourceTree = "<group>"; };
 		4A863EEE15CB247B00003359 /* SceneGameUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneGameUI.cpp; sourceTree = "<group>"; };
@@ -530,10 +524,6 @@
 			children = (
 				4A863EE415CB247B00003359 /* SceneAndroidsManager.cpp */,
 				4A863EE515CB247B00003359 /* SceneAndroidsManager.h */,
-				4A863EE815CB247B00003359 /* SceneGameBurgersDeathmatch.cpp */,
-				4A863EE915CB247B00003359 /* SceneGameBurgersDeathmatch.h */,
-				4A863EEA15CB247B00003359 /* SceneGameManager.cpp */,
-				4A863EEB15CB247B00003359 /* SceneGameManager.h */,
 				4A863EEC15CB247B00003359 /* SceneGameSyndicate.cpp */,
 				4A863EED15CB247B00003359 /* SceneGameSyndicate.h */,
 				4A863EEE15CB247B00003359 /* SceneGameUI.cpp */,
@@ -1143,8 +1133,6 @@
 				4A863F1015CB247B00003359 /* PickupBase.cpp in Sources */,
 				4A863F1115CB247B00003359 /* WeaponBase.cpp in Sources */,
 				4A863F1215CB247B00003359 /* SceneAndroidsManager.cpp in Sources */,
-				4A863F1415CB247B00003359 /* SceneGameBurgersDeathmatch.cpp in Sources */,
-				4A863F1515CB247B00003359 /* SceneGameManager.cpp in Sources */,
 				4A863F1615CB247B00003359 /* SceneGameSyndicate.cpp in Sources */,
 				4A863F1715CB247B00003359 /* SceneGameUI.cpp in Sources */,
 				4A863F1915CB247B00003359 /* ScenePlayManager.cpp in Sources */,
