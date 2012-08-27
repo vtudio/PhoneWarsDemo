@@ -24,10 +24,10 @@ else
 	APP_CPPFLAGS  += -g3
 endif
 
-INTEL := $(strip $(INTEL))
-ifdef INTEL
+#INTEL := $(strip $(INTEL))
+#ifdef INTEL
     APP_ABI		+= x86
-endif
+#endif
 
 # Make all warnings into errors
 APP_CPPFLAGS  := -Werror
