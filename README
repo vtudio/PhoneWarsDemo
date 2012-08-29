@@ -14,7 +14,7 @@ Cross platform 3D application framework used to develop this app.
 
 Android NDK r8 (Apache 2.0)
 http://developer.android.com/sdk/ndk/
-Android NDK samples used for guidance to set u Android port.
+Android NDK samples used for guidance to set up Android port.
 Source file CCGLViewJNI.java found in Dev/Android/Source/src/com/android2c/ based off hello-gl2 sample.
 
 libzip (libzip)
